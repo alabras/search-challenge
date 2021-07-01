@@ -29,3 +29,8 @@ https://search-challenge-web.azurewebsites.net/
 
 - WEB: https://github.com/alabras/search-challenge-web
 - API: https://github.com/alabras/search-challenge-api
+
+## TODO:
+
+- Faltó realizar pruebas e2e por tiempo :(
+- Faltó realizar modelo de arquitectura con C4.
