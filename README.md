@@ -24,3 +24,8 @@ Estas se deployan en cada pipeline.
 ### URL Sitio Live
 
 https://search-challenge-web.azurewebsites.net/
+
+### Listado de repositorios
+
+- WEB: https://github.com/alabras/search-challenge-web
+- API: https://github.com/alabras/search-challenge-api
