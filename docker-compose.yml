@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  mongodb-local:
+    image: mongo:3.6.8
+    container_name: db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=productListUser
+      - MONGO_INITDB_ROOT_PASSWORD=productListPassword
+    ports:
+      - 27017:27017
+    volumes:
+      - ./database:/database
+    networks:
+      - app-network
+  api:
+    build:
+      context: ../search-challenge-api/.
+      dockerfile: ../search-challenge-api/Dockerfile
+    ports:
+      - "8081:5000"
+    container_name: api
+    environment:
+      - MONGO_DATABASE=promotions
+      - MONGO_CONNECTION=mongodb://productListUser:productListPassword@db:27017
+      - LIST_CORS_URL=http://localhost:8080
+    networks:
+      - app-network
+    depends_on:
+      - mongodb-local
+  web:
+    build:
+      context: ../search-challenge-web/.
+      dockerfile: ../search-challenge-web/Dockerfile
+    container_name: web
+    ports:
+      - "8080:8080"
+    environment:
+      - API_URL=http://localhost:8081/
+    networks:
+      - app-network
+  mongo-seed:
+    image: stefanwalther/mongo-seed
+    container_name: mongo-seed
+    environment:
+      - MONGODB_HOST=db
+      - MONGODB_PORT=27017
+    volumes:
+      - ../products-db/database:/data
+    networks:
+      - app-network
+    depends_on:
+      - mongodb-local
+    command:
+      [
+        "mongoimport --host db --username productListUser --password productListPassword --authenticationDatabase admin --db promotions --collection products --mode upsert --file /data/01-products.json",
+      ]
+
+networks:
+  app-network:
+    driver: bridge
