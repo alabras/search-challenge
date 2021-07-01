@@ -20,3 +20,7 @@ Para las imagenes docker se uso el registry de docker hub:
 - WEB: https://hub.docker.com/repository/docker/alabra/search-challenge-web
 
 Estas se deployan en cada pipeline.
+
+### URL Sitio Live
+
+https://search-challenge-web.azurewebsites.net/
